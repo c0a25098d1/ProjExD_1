@@ -13,19 +13,31 @@ def main():
     bg_img2 = pg.transform.flip(bg_img, True,False)#練習8
     kk_img = pg.image.load("fig/3.png")
     kk_img = pg.transform.flip(kk_img, True, False)
+    kk_rct = kk_img.get_rect()#練習10: こうかとんRectの取得
+    kk_rct.center = 300,200 #練習10: こうかとんの初期座標の表示
     tmr = 0
     while True:
         for event in pg.event.get():
             if event.type == pg.QUIT: return
 
+        key_lst = pg.key.get_pressed() #すべてのキーの押下状態の取得
+        if key_lst[pg.K_UP]:
+            kk_rct.move_ip((0, -1)) #上矢印キーが押されていたら
+        if key_lst[pg.K_DOWN]:
+            kk_rct.move_ip((0, 1)) #下矢印キーが押されていたら
+        if key_lst[pg.K_LEFT]:
+            kk_rct.move_ip((-1, 0)) #上矢印キーが押されていたら
+        if key_lst[pg.K_RIGHT]:
+            kk_rct.move_ip((1, 1)) #下矢印キーが押されていたら       
         x = tmr%3200 #練習5
         screen.blit(bg_img, [-x, 0]) #練習2 #練習6
         screen.blit(bg_img2, [-x+1600, 0]) #練習7
         screen.blit(bg_img, [-x+3200, 0]) #練習9
-        screen.blit(kk_img, [300, 200]) #練習4
+        screen.blit(kk_img, kk_rct) #練習4
         pg.display.update()
         tmr += 1        
-        clock.tick(200)#練習6
+
+        clock.tick(2000)#練習6
 
 
 if __name__ == "__main__":
